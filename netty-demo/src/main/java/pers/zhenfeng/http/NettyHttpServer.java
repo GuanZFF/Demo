@@ -1,4 +1,4 @@
-package pers.zhenfeng;
+package pers.zhenfeng.http;
 
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.*;
