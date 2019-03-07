@@ -28,6 +28,7 @@
         <module>concurrent-demo</module>
         <module>spring-demo</module>
         <module>kafka-demo</module>
+        <module>mybatis-demo</module>
     </modules>
 
 

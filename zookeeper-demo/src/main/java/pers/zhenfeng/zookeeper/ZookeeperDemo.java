@@ -3,6 +3,7 @@ package pers.zhenfeng.zookeeper;
 import org.apache.zookeeper.AsyncCallback;
 import org.apache.zookeeper.ZooKeeper;
 import org.apache.zookeeper.data.Stat;
+import org.apache.zookeeper.server.ZooKeeperServer;
 
 /**
  * @author Grow-Worm
