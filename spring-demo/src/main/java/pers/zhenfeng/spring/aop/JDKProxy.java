@@ -1,5 +1,7 @@
 package pers.zhenfeng.spring.aop;
 
+import java.lang.reflect.InvocationHandler;
+import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 
 /**
@@ -8,15 +10,29 @@ import java.lang.reflect.Proxy;
  */
 public class JDKProxy {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
+
+        // 实现方式一
         UserService userService = (UserService) Proxy.newProxyInstance(UserServiceImpl.class.getClassLoader(), new Class[]{UserService.class}, (proxy, method, args1) -> {
             System.out.println("before invoke...");
-            method.invoke(new JDKProxy().new UserServiceImpl(), args1);
+            Object result = method.invoke(new JDKProxy().new UserServiceImpl(), args1);
             System.out.println("after invoke...");
-            return null;
+            return result;
         });
 
-        userService.getUsername("123");
+        System.out.println(userService.getUsername("890"));
+
+        // 实现方式二
+        Class<?> proxyClass = Proxy.getProxyClass(UserServiceImpl.class.getClassLoader(), UserService.class);
+        userService = (UserService) proxyClass.getConstructor(InvocationHandler.class).newInstance((InvocationHandler) (proxy, method, args12) -> {
+            System.out.println("The second way implement before invoke...");
+            Object result = method.invoke(new JDKProxy().new UserServiceImpl(), args12);
+            System.out.println("The second way implement after invoke...");
+            return result;
+        });
+
+        System.out.println(userService.getUsername("123"));
+
     }
 
     interface UserService {

@@ -9,7 +9,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserService {
 
-    public void index() {
+    public void index(String username) {
+        System.out.println(username);
         System.out.println("UserService.index");
     }
 

@@ -11,7 +11,7 @@ public class Application {
     public static void main(String[] args) {
         AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(AppConfig.class);
         UserService userService = context.getBean(UserService.class);
-        userService.index();
+        userService.index("guanzhenfeng");
         userService.printPassword();
         userService.printUsername();
     }

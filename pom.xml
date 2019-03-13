@@ -29,6 +29,7 @@
         <module>spring-demo</module>
         <module>kafka-demo</module>
         <module>mybatis-demo</module>
+        <module>dubbo-demo</module>
     </modules>
 
 

@@ -1,9 +1,10 @@
 package pers.zhenfeng.zookeeper;
 
-import org.apache.zookeeper.AsyncCallback;
+import org.apache.zookeeper.Watcher;
 import org.apache.zookeeper.ZooKeeper;
 import org.apache.zookeeper.data.Stat;
-import org.apache.zookeeper.server.ZooKeeperServer;
+
+import java.util.List;
 
 /**
  * @author Grow-Worm
@@ -19,18 +20,47 @@ public class ZookeeperDemo {
         });
 
 
-        Stat stat = new Stat();
-
-        zooKeeper.getData("/data", event -> {
-            System.out.println("监听器触发");
-        }, stat);
-
-        zooKeeper.getData("/data", false, new AsyncCallback.DataCallback() {
-            @Override
-            public void processResult(int rc, String path, Object ctx, byte[] data, Stat stat) {
-                System.out.println("发生了回调");
+        List<String> children = zooKeeper.getChildren("/configs", event -> {
+            System.out.println(event.getPath());
+            System.out.println(event.getType().getIntValue());
+            if (Watcher.Event.EventType.NodeCreated.equals(event.getType())) {
+                System.out.println("ZookeeperDemo.main create");
             }
-        }, null);
+            if (Watcher.Event.EventType.NodeDataChanged.equals(event.getType())) {
+                System.out.println("ZookeeperDemo.main changed");
+            }
+        });
+
+        for (String key : children) {
+            Stat stat = new Stat();
+
+            byte[] data = zooKeeper.getData("/configs/" + key, event -> {
+                System.out.println(event.getPath());
+                System.out.println(event.getType().getIntValue());
+                System.out.println("监听器触发");
+            }, stat);
+
+            System.out.println(key + " = " + new String(data));
+
+        }
+
+        zooKeeper.getData("/configs", event -> {
+            System.out.println("getData()");
+            System.out.println(event.getPath());
+        }, new Stat());
+
+        zooKeeper.register(event -> {
+            System.out.println("111  " + event.getPath());
+            if ((Watcher.Event.EventType.NodeCreated.equals(event.getType())
+                    || Watcher.Event.EventType.NodeCreated.equals(event.getType()))
+                    && event.getPath().startsWith("/configs")) {
+                System.out.println("create or update" + event.getPath());
+            }
+            if (Watcher.Event.EventType.NodeDeleted.equals(event.getType())
+                    && event.getPath().startsWith("/configs")) {
+                System.out.println("delete" + event.getPath());
+            }
+        });
 
         System.in.read();
     }
