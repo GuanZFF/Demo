@@ -26,3 +26,56 @@
     1. 同启动时领导者选举，然后进行重新的leader选举
 3. 运行时期出现follower挂掉
     2. 如果依然满足过半机制，能够正常工作，leader不进行重新选举
+    
+    
+    
+    
+### zkCli流程
+
+#### 启动zkCli初始化工作
+1. parseOptions解析参数
+2. ZooKeeper对象被创建
+    1. ConnectStringParser解析链接信息
+    2. 创建ClientCnxnSocketNIO（用于和server的通信），后续在sendThread中使用
+    2. ClientCnxn对象被创建
+        1. 初始化一些配置
+        2. 创建线程SendThread
+        3. 创建线程EventThread
+    3. 调用ClientCnxn的start()
+        1. 启动线程sendThread
+            1. ClientCnxnSocketNIO.connect()链接服务器
+            2. 发送ping命令
+            3. 调用ClientCnxnSocketNIO.doTransport() -> ClientCnxnSocketNIO.doIO()使用NIO发送package给服务器（发送的是outgoingQueue中packet数据）
+            4. ClientCnxnSocketNIO中判断channel中是否有数据可读，有数据时读出来交给SendThread.readResponse()处理
+            5. 判断response中是否有事件处理，有时交给EventThread处理，如watch
+        2. 启动线程eventThread
+            1. 判断队列waitingEvents中是否有数据，有时处理事件，没有时阻塞
+3. ZooKeeperMain.run()方法被调用
+    1. 阻塞等待接受命令
+    2. 接受到命令
+        1. 调用processCmd() -> processZKCmd()找到相应的处理方案
+        2. 调用submitRequest()提交请求
+        3. 生成Packet包放入outgoingQueue队列中
+        
+        
+#### 启动zkServer工作原理
+1. ZooKeeperServer对象被创建
+2. FileTxnSnapLog生成日志文件
+3. 调用ZooKeeperServer.startup()方法，创建3个requestProcessor
+    1. 创建FinalRequestProcessor，头结点是SyncRequestProcessor
+    2. 创建SyncRequestProcessor（是线程），头结点PrepRequestProcessor
+    3. 创建PrepRequestProcessor（是线程）
+    
+#### 启动zkServer集群工作原理
+1. 启动时leader选举
+2. 数据同步
+3. leader发起提议需改数据
+
+
+### ZKClient和KZServer整理
+
+QuorumPeerMain -> ZooKeeperServerMain -> ZooKeeperServer(设置配置)
+                                            -> 启动RequestProcessor
+                                      -> ServerCnxnFactory（NIOServerCnxnFactory）
+                                            -> 开启线程NIOServerCxn.Factory:
+                                            -> 调用ZKDatabase加载数据

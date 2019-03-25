@@ -7,7 +7,6 @@
 
     <dubbo:registry address="zookeeper://140.143.201.74:2181"/>
 
-    <dubbo:reference interface="pers.zhenfeng.dubbo.api.UserService" id="userService" group="*" merger="MyMerger">
-    </dubbo:reference>
+    <dubbo:reference interface="pers.zhenfeng.dubbo.api.UserService" id="userService" group="*" merger="MyMerger"/>
 
 </beans>

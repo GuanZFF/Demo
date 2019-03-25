@@ -12,6 +12,7 @@ import java.lang.reflect.Proxy;
 public class JDKDynamicProxyDemo {
 
     public static void main(String[] args) throws Exception {
+        // 开启动态生成的类进行存储
         System.setProperty("sun.misc.ProxyGenerator.saveGeneratedFiles", "true");
 
         Class<?> proxyClass = Proxy.getProxyClass(Thread.currentThread().getContextClassLoader(), UserServiceImpl.class.getInterfaces());

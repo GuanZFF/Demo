@@ -10,15 +10,11 @@ import java.io.IOException;
  */
 public class ProviderDemo {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("classpath:dubbo-provider.xml");
         context.start();
 
-        try {
-            System.in.read();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        System.in.read();
     }
 
 }

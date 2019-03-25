@@ -30,6 +30,7 @@
         <module>kafka-demo</module>
         <module>mybatis-demo</module>
         <module>dubbo-demo</module>
+        <module>spring-demo-aop</module>
     </modules>
 
 

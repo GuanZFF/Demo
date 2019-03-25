@@ -18,6 +18,8 @@ public class User {
 
     private String password;
 
+    private Integer trans;
+
     public String getUsername() {
         return username;
     }
@@ -32,5 +34,13 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public Integer getTrans() {
+        return trans;
+    }
+
+    public void setTrans(Integer trans) {
+        this.trans = trans;
     }
 }

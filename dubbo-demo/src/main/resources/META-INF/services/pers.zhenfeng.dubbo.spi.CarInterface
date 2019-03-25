@@ -1,0 +1,3 @@
+a=pers.zhenfeng.dubbo.spi.impl.RedCarInterface
+b=pers.zhenfeng.dubbo.spi.impl.BlackCarInterface
+pers.zhenfeng.dubbo.spi.impl.BenCarInteface

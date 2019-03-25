@@ -19,6 +19,7 @@ public class XmlApplication {
 
         System.out.println(bean.getPassword());
         System.out.println(bean.getUsername());
+        System.out.println(bean.getTrans());
 
         DataSources bean1 = context.getBean(DataSources.class);
 
