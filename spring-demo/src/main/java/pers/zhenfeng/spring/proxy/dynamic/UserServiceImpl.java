@@ -8,7 +8,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public String getUsername(String userId) {
-        System.out.println("userId = " + userId);
         System.out.println("UserServiceImpl.getUsername");
         return "dynamic proxy";
     }

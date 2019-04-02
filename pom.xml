@@ -31,6 +31,7 @@
         <module>mybatis-demo</module>
         <module>dubbo-demo</module>
         <module>spring-demo-aop</module>
+        <module>rabbitmq-demo</module>
     </modules>
 
 
