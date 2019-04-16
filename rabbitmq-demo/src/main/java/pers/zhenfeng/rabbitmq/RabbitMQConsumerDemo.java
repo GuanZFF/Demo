@@ -11,15 +11,25 @@ import java.util.concurrent.TimeoutException;
  */
 public class RabbitMQConsumerDemo {
 
+    private static int index = 1;
+
+    private static long mark = System.currentTimeMillis();
+
     public static void main(String[] args) throws IOException, TimeoutException {
         RabbitMQUtil rabbitMQUtil = new RabbitMQUtil();
         Channel channel = rabbitMQUtil.getChannel();
-        channel.basicConsume("order", new DefaultConsumer(channel) {
+        channel.basicQos(1000);
+        channel.basicConsume("test", false, new DefaultConsumer(channel) {
             @Override
             public void handleDelivery(String consumerTag, Envelope envelope, AMQP.BasicProperties properties, byte[] body) throws IOException {
-                System.out.println("consumerTag = " + consumerTag);
-                System.out.println(new String(body));
-                System.out.println("RabbitMQConsumerDemo.handleDelivery");
+                channel.basicAck(envelope.getDeliveryTag(), true);
+//                System.out.println("consumerTag = " + consumerTag);
+//                System.out.println(new String(body));
+//                System.out.println("RabbitMQConsumerDemo.handleDelivery");
+                if (index ++ == 1000) {
+                    System.out.println("耗时" + (System.currentTimeMillis() - mark));
+                    index = 0;
+                }
             }
         });
 

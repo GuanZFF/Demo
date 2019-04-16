@@ -32,6 +32,7 @@
         <module>dubbo-demo</module>
         <module>spring-demo-aop</module>
         <module>rabbitmq-demo</module>
+        <module>nio-demo</module>
     </modules>
 
 
