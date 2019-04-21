@@ -31,6 +31,8 @@ public class JDKDynamicProxyDemo {
         String username = userService.getUsername("123");
 
         System.out.println(username);
+
+        System.in.read();
     }
 
 }
