@@ -11,11 +11,15 @@ import java.util.List;
  */
 public class ApplicationDemo {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         AnnotationConfigApplicationContext applicationContext = new AnnotationConfigApplicationContext(AppConfig.class);
-        UserMapper bean = applicationContext.getBean(UserMapper.class);
-        List<User> users = bean.getUsers();
-        System.out.println(users);
+        UserMapper mapper = applicationContext.getBean(UserMapper.class);
+        List<User> users = mapper.getUsers();
+        System.out.println("-------------------------------------------");
+        users.forEach(item ->{
+            System.out.println(item.getId() + " : " + item.getUsername() + " : " + item.getPassword());
+            System.out.println("-------------------------------------------");
+        });
     }
 
 }

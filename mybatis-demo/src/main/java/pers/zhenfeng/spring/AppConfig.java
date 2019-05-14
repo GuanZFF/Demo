@@ -1,12 +1,11 @@
 package pers.zhenfeng.spring;
 
-import com.mchange.v2.c3p0.ComboPooledDataSource;
-import org.apache.ibatis.datasource.unpooled.UnpooledDataSource;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
-import org.mybatis.spring.SqlSessionTemplate;
+import org.mybatis.spring.mapper.MapperFactoryBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.jdbc.datasource.DriverManagerDataSource;
 
 import javax.sql.DataSource;
 
@@ -19,13 +18,12 @@ public class AppConfig {
 
     @Bean
     public DataSource dataSource() {
-        ComboPooledDataSource comboPooledDataSource = new ComboPooledDataSource();
-        UnpooledDataSource unpooledDataSource = new UnpooledDataSource();
-        unpooledDataSource.setDriver("com.mysql.jdbc.Driver");
-        unpooledDataSource.setUrl("jdbc:mysql://tencent.database:10032/test");
-        unpooledDataSource.setUsername("root");
-        unpooledDataSource.setPassword("wangguan624");
-        return unpooledDataSource;
+        DriverManagerDataSource dataSource = new DriverManagerDataSource();
+        dataSource.setDriverClassName("com.mysql.jdbc.Driver");
+        dataSource.setUrl("jdbc:mysql://tencent.database:10032/test");
+        dataSource.setUsername("root");
+        dataSource.setPassword("wangguan624");
+        return dataSource;
     }
 
     @Bean
@@ -36,8 +34,9 @@ public class AppConfig {
     }
 
     @Bean
-    public UserMapper userMapper(SqlSessionFactory sqlSessionFactory) throws Exception {
-        SqlSessionTemplate sqlSessionTemplate = new SqlSessionTemplate(sqlSessionFactory);
-        return sqlSessionTemplate.getMapper(UserMapper.class);
+    public MapperFactoryBean<UserMapper> userMapper(SqlSessionFactory sqlSessionFactory) throws Exception {
+        MapperFactoryBean<UserMapper> factoryBean = new MapperFactoryBean<>(UserMapper.class);
+        factoryBean.setSqlSessionFactory(sqlSessionFactory);
+        return factoryBean;
     }
 }

@@ -13,7 +13,7 @@ public class ProducerDemo {
 
     public static void main(String[] args) {
         Properties properties = new Properties();
-        properties.put("bootstrap.servers", "192.168.1.110:9092");
+        properties.put("bootstrap.servers", "www.gzhenfeng.cn:9092");
         properties.put("acks", "all");
         properties.put("retries", 0);
         properties.put("batch.size", 16384);
@@ -24,7 +24,7 @@ public class ProducerDemo {
 
         KafkaProducer<String, String> producer = new KafkaProducer<>(properties);
         producer.send(new ProducerRecord<>("hello world", "test"), (metadata, exception) -> {
-            System.out.println(metadata.topic());
+            System.out.println(metadata);
             System.out.println("ProducerDemo.main");
         });
 

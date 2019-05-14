@@ -34,6 +34,7 @@
         <module>rabbitmq-demo</module>
         <module>nio-demo</module>
         <module>design-pattern-demo</module>
+        <module>redis-demo</module>
     </modules>
 
 
