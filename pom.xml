@@ -35,6 +35,7 @@
         <module>nio-demo</module>
         <module>design-pattern-demo</module>
         <module>redis-demo</module>
+        <module>base-demo</module>
     </modules>
 
 
