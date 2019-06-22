@@ -36,6 +36,7 @@
         <module>design-pattern-demo</module>
         <module>redis-demo</module>
         <module>base-demo</module>
+        <module>mysql-demo</module>
     </modules>
 
 
