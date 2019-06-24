@@ -4,3 +4,4 @@
 - zookeeper三种客户端的连接方式
 - spring基础ioc、aop的相关配置
 - kafka的producer和consumer用例
+- mysql相关测试（[MYSQL](./mybatis-demo/Mybatis.md)）
