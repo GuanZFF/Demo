@@ -17,7 +17,7 @@ public class ServerSocketChannelDemo {
         Selector selector = Selector.open();
 
         ServerSocketChannel serverSocketChannel = ServerSocketChannel.open();
-        serverSocketChannel.bind(new InetSocketAddress(9999));
+        serverSocketChannel.bind(new InetSocketAddress(8888));
         serverSocketChannel.configureBlocking(false);
         serverSocketChannel.register(selector, SelectionKey.OP_ACCEPT);
 
@@ -47,7 +47,11 @@ public class ServerSocketChannelDemo {
                 }
                 if (key.isReadable()) {
                     SocketChannel socketChannel = (SocketChannel) key.channel();
-                    socketChannel.read(buffer);
+                    int read = socketChannel.read(buffer);
+                    if (read <= 0) {
+                        System.out.println("connection close");
+                        continue;
+                    }
 
                     buffer.flip();
 
