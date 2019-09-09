@@ -40,6 +40,12 @@ public class NioServerDemo {
                     SocketChannel channel = (SocketChannel) selectionKey.channel();
                     buffer.clear();
                     int read = channel.read(buffer);
+                    if (read <= 0) {
+                        System.out.println("连接被关闭");
+                        channel.close();
+                        continue;
+                    }
+
                     buffer.flip();
                     System.out.println("read = " + new String(buffer.array(), 0, read));
                     selectionKey.interestOps(SelectionKey.OP_READ);
