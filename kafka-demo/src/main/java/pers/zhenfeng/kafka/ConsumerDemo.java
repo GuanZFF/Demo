@@ -13,6 +13,7 @@ import java.util.Properties;
  */
 public class ConsumerDemo {
 
+
     public static void main(String[] args) {
         Properties properties = new Properties();
         properties.put("bootstrap.servers", "www.gzhenfeng.cn:9092");

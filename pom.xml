@@ -37,6 +37,7 @@
         <module>redis-demo</module>
         <module>base-demo</module>
         <module>mysql-demo</module>
+        <module>tomcat-demo</module>
     </modules>
 
 
