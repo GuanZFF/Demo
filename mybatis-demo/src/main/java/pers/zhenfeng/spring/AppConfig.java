@@ -20,9 +20,9 @@ public class AppConfig {
     public DataSource dataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName("com.mysql.jdbc.Driver");
-        dataSource.setUrl("jdbc:mysql://tencent.database:10032/test");
+        dataSource.setUrl("jdbc:mysql://cdb-oef40sfc.bj.tencentcdb.com:10032/test");
         dataSource.setUsername("root");
-        dataSource.setPassword("wangguan624");
+        dataSource.setPassword("Guanzf123");
         return dataSource;
     }
 
