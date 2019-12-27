@@ -6,9 +6,9 @@
             <transactionManager type="JDBC"/>
             <dataSource type="POOLED">
                 <property name="driver" value="com.mysql.jdbc.Driver"/>
-                <property name="url" value="jdbc:mysql://tencent.database:10032/test"/>
+                <property name="url" value="jdbc:mysql://cdb-oef40sfc.bj.tencentcdb.com:10032/test"/>
                 <property name="username" value="root"/>
-                <property name="password" value="wangguan624"/>
+                <property name="password" value="Guanzf123"/>
             </dataSource>
         </environment>
     </environments>
