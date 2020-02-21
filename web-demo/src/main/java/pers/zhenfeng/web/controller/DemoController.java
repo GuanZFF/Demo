@@ -1,11 +1,8 @@
 package pers.zhenfeng.web.controller;
 
-import com.alibaba.fastjson.JSON;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.context.MessageSource;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.event.ApplicationEventMulticaster;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.ObjectUtils;
@@ -18,11 +15,14 @@ import pers.zhenfeng.web.config.ThreadLocalUtil;
 import pers.zhenfeng.web.mapper.User;
 import pers.zhenfeng.web.mapper.UserMapper;
 import pers.zhenfeng.web.model.OOMDemo;
+import redis.clients.jedis.Jedis;
+import sun.misc.Signal;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * @author Grow-Worm
@@ -80,6 +80,45 @@ public class DemoController {
         oom(count);
 
         return "success";
+    }
+
+    @Value("${redis.host}")
+    private String host;
+
+    @Value("${redis.port}")
+    private Integer port;
+
+    @RequestMapping("redis")
+    @ResponseBody
+    public String redisProduce(String keyIndex, Integer count) {
+
+        Jedis jedis = new Jedis(host, port);
+
+        for (int i = 0; i < count; i++) {
+            String randomValue = UUID.randomUUID().toString();
+
+            jedis.set(keyIndex + i, randomValue);
+        }
+
+        System.out.println("complete!!!");
+
+        return "SUCCESS";
+    }
+
+    @RequestMapping("redis-key")
+    @ResponseBody
+    public String getRedis(String keyIndex, Integer count) {
+        Jedis jedis = new Jedis(host, port);
+
+        StringBuilder result = new StringBuilder();
+
+        for (int i = 0; i < count; i++) {
+            result.append(jedis.get(keyIndex + i)).append("  ");
+        }
+
+        System.out.println("complete!!!");
+
+        return result.toString();
     }
 
 

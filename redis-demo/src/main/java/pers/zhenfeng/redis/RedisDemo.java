@@ -14,7 +14,7 @@ public class RedisDemo {
 
     public static void main(String[] args) {
         Set<HostAndPort> hostAndPorts = new HashSet<>();
-        hostAndPorts.add(new HostAndPort("140.143.201.74", 7000));
+        hostAndPorts.add(new HostAndPort("140.143.201.74", 6380));
 
         JedisCluster jedisCluster = new JedisCluster(hostAndPorts);
         jedisCluster.set("name", "guanzhenfeng");
