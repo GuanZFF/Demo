@@ -8,13 +8,10 @@ import java.math.BigDecimal;
  */
 public class Test {
 
-    public static void main(String[] args) throws InterruptedException {
+    public static void main(String[] args) {
         System.out.println(new BigDecimal(0.2).compareTo(BigDecimal.ZERO) > 0);
 
         System.out.println("123".hashCode());
-
-        Thread.sleep(20000);
-
     }
 
 }
