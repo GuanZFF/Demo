@@ -1,10 +1,13 @@
 package pers.zhenfeng.mybatis;
 
+import java.io.Serializable;
+
 /**
  * @author Grow-Worm
  * @date 2019/04/20
  */
-public class User {
+public class User implements Serializable {
+
     private Integer id;
 
     private String username;

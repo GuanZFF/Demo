@@ -6,7 +6,9 @@ import org.springframework.context.MessageSource;
 import org.springframework.context.event.ApplicationEventMulticaster;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.ObjectUtils;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import pers.zhenfeng.web.config.AppConfig;
@@ -19,6 +21,8 @@ import redis.clients.jedis.Jedis;
 import sun.misc.Signal;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -93,6 +97,7 @@ public class DemoController {
     public String redisProduce(String keyIndex, Integer count) {
 
         Jedis jedis = new Jedis(host, port);
+        jedis.auth("guanzf");
 
         for (int i = 0; i < count; i++) {
             String randomValue = UUID.randomUUID().toString();
@@ -121,6 +126,30 @@ public class DemoController {
         return result.toString();
     }
 
+    @RequestMapping("IP")
+    @ResponseBody
+    public String getIp(HttpServletRequest request, HttpServletResponse response) {
+        System.out.println(request);
+        return "test";
+    }
+
+    @RequestMapping("/insert/user")
+    @ResponseBody
+    public String patchInsertUser(Integer count) {
+        while (count > 0) {
+
+            User user = new User();
+            user.setUsername(UUID.randomUUID().toString());
+            user.setPassword(UUID.randomUUID().toString());
+
+            userMapper.insertUser(user);
+
+            count--;
+        }
+
+        return "SUCCESS";
+    }
+
 
     private void cpuExe(Integer count) {
         for (int i = 0; i < count; i++) {
@@ -143,5 +172,27 @@ public class DemoController {
         System.out.println(oom.size());
     }
 
+    @RequestMapping("user")
+    @ResponseBody
+    public User getUser(String username) {
+        if (StringUtils.isEmpty(username)) {
+            return null;
+        }
+        return userMapper.getUser(username);
+    }
+
+    @RequestMapping(value = "/post", method = RequestMethod.POST)
+    @ResponseBody
+    public String postTest(HttpServletRequest request, HttpServletResponse response) {
+        System.out.println("test");
+        return "SUCCESS";
+    }
+
+    @RequestMapping(value = "/user", method = RequestMethod.POST)
+    @ResponseBody
+    public String postTest(User user) {
+        System.out.println(user.toString());
+        return "SUCCESS";
+    }
 
 }

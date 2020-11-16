@@ -21,4 +21,7 @@ public interface UserMapper {
     @Insert("insert into user(username, password) value(#{user.username}, #{user.password})")
     Integer insertUser(@Param("user") User user);
 
+    @Select("select * from user where username = #{username}")
+    User getUser(@Param("username") String username);
+
 }

@@ -1,0 +1,2 @@
+Premain-Class: pers.zhenfeng.base.instrucmentation.MyAgent
+Agent-Class: pers.zhenfeng.base.instrucmentation.MyAgent

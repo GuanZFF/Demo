@@ -45,6 +45,7 @@
         <module>mysql-demo</module>
         <module>tomcat-demo</module>
         <module>web-demo</module>
+        <module>mq-demo</module>
     </modules>
 
 

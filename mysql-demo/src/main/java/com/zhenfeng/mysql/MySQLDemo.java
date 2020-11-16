@@ -11,15 +11,11 @@ public class MySQLDemo {
     public static void main(String[] args) throws ClassNotFoundException, SQLException {
         Class.forName("com.mysql.jdbc.Driver");
 
-        Connection connection = DriverManager.getConnection("jdbc:mysql://www.gzhenfeng.cn:8066/TESTDB?useSSL=false&serverTimezone=UTC", "root", "123456");
+        Connection connection = DriverManager.getConnection("jdbc:mysql://140.143.201.74:4000/test", "root", "");
 
         Statement statement = connection.createStatement();
 
-        ResultSet resultSet = statement.executeQuery("select * from t3 order by id");
-
-        while (resultSet.next()) {
-            System.out.println("数据" + resultSet.getInt(1) + " " + resultSet.getInt(2));
-        }
+        statement.execute("insert into user(username, password, age, sex) value ('guanzf', '123456789', 123, 1)");
     }
 
 }

@@ -16,7 +16,7 @@ public class ConsumerDemo {
 
     public static void main(String[] args) {
         Properties properties = new Properties();
-        properties.put("bootstrap.servers", "www.gzhenfeng.cn:9092");
+        properties.put("bootstrap.servers", "49.232.112.252:9092");
         properties.put("group.id", "0");
         properties.put("enable.auto.commit", "true");
         properties.put("auto.commit.interval.ms", "1000");
@@ -26,7 +26,7 @@ public class ConsumerDemo {
         properties.put("value.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
 
         KafkaConsumer<String, String> kafkaConsumer = new KafkaConsumer<>(properties);
-        kafkaConsumer.subscribe(Collections.singletonList("test"));
+        kafkaConsumer.subscribe(Collections.singletonList("quickstart"));
         while (true) {
             ConsumerRecords<String, String> records = kafkaConsumer.poll(100);
             for (ConsumerRecord<String, String> record : records) {

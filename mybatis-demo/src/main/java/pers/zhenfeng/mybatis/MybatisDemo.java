@@ -7,6 +7,8 @@ import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 
 /**
@@ -16,15 +18,30 @@ import java.util.List;
 public class MybatisDemo {
 
     public static void main(String[] args) throws IOException {
+
+        ExecutorService executorService = Executors.newFixedThreadPool(10);
+
         SqlSessionFactory factory = new SqlSessionFactoryBuilder().build(Resources.getResourceAsStream("mybatis-config.xml"));
-        SqlSession sqlSession = factory.openSession();
-        UserMapper mapper = sqlSession.getMapper(UserMapper.class);
-        List<User> users = mapper.getUsers();
-        System.out.println("-------------------------------------------");
-        users.forEach(item ->{
-            System.out.println(item.getId() + " : " + item.getUsername() + " : " + item.getPassword());
-            System.out.println("-------------------------------------------");
+        factory.getConfiguration().addInterceptor(new TestInterceptor());
+
+
+        executorService.execute(() -> {
+            SqlSession sqlSession = factory.openSession();
+            UserMapper mapper = sqlSession.getMapper(UserMapper.class);
+            mapper.getUsers();
+
+            mapper.getUsers();
+            sqlSession.close();
         });
+
+        executorService.execute(() -> {
+            SqlSession sqlSession = factory.openSession();
+            UserMapper mapper = sqlSession.getMapper(UserMapper.class);
+            mapper.getUsers();
+            sqlSession.close();
+        });
+
+        executorService.shutdown();
     }
 
 }
